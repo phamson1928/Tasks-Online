@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "47619568645",
+    "project_id": "to-do-app-cc579",
+    "storage_bucket": "to-do-app-cc579.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47619568645:android:c2b163bd107946ce00586c",
+        "android_client_info": {
+          "package_name": "com.example.quanlicongviec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47619568645-st4ndvkmbcphq95picuguqm5u4t3r1hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDr8oLCrMyuoLZZ39RqIL8mUR5EjU01Q2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47619568645-st4ndvkmbcphq95picuguqm5u4t3r1hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
