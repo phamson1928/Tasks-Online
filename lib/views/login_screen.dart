@@ -141,7 +141,6 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     child: Image.asset('assets/images/google-icon.png', height: 55, width: 44), // Icon Google
-
                   ),
               ),
 

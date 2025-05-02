@@ -19,19 +19,22 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => AddScreen()));
         },
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.deepOrange,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: Color.fromRGBO(255, 255, 255, 1), size: 40),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: _pages[navigationViewModel.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.deepOrange,
+        unselectedItemColor: Colors.grey,
         currentIndex: navigationViewModel.currentIndex,
         onTap: (index) {
           navigationViewModel.updateIndex(index);
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Trang chủ"),
+          BottomNavigationBarItem(icon: Icon(Icons.home ), label: "Trang chủ"),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Lịch"),
         ],
       ),
