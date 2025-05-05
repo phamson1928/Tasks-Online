@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import '../view_models/Task_Provider.dart';
-import 'Detail_Screen.dart';
-import 'Setting_Screen.dart';
+import '../view_models/task_provider.dart';
+import 'detail_screen.dart';
+import 'setting_screen.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         backgroundColor: Colors.deepOrange,
         centerTitle: true,
         title: const Text(
-          "SmartTasks",
+          "Tasks Online",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,

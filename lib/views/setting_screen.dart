@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/auth_service.dart';
-import 'login_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -35,28 +34,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setBool('dark_mode_enabled', _darkModeEnabled);
   }
 
-  Future<void> _logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    // Clear user session data
-    await prefs.remove('auth_token');
-    await prefs.remove('user_id');
-
-    // Show logout confirmation
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Đã đăng xuất thành công'),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-
-    // Navigate to login screen and remove all previous routes
-    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-
-    // Note: You need to ensure '/login' route is defined in your MaterialApp
-    // If you don't have a login route yet, you can modify this to:
-    // Navigator.of(context).pushReplacementNamed('/login');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,18 +77,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildUserProfileSection() {
     final user = FirebaseAuth.instance.currentUser;
-    String? _username = user?.displayName;
-    if (_username == null || _username.isEmpty) {
-      _username = "U";
+    String? username = user?.displayName;
+    if (username == null || username.isEmpty) {
+      username = "U";
     }
 
-    String? _avatarUrl = user?.photoURL;
-    if (_avatarUrl == null || _avatarUrl.isEmpty) {
-      _avatarUrl = "https://via.placeholder.com/150";
+    String? avatarUrl = user?.photoURL;
+    if (avatarUrl == null || avatarUrl.isEmpty) {
+      avatarUrl = "https://via.placeholder.com/150";
     }
-    String? _email = user?.email;
-    if (_email == null || _email.isEmpty) {
-      _email = "U";
+    String? email = user?.email;
+    if (email == null || email.isEmpty) {
+      email = "U";
     }
     return Container(
       padding: const EdgeInsets.all(20),
@@ -119,13 +96,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           CircleAvatar(
             radius: 30,
-            backgroundImage: NetworkImage(_avatarUrl),
+            backgroundImage: NetworkImage(avatarUrl),
           ),
           const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(_username,
+              Text(username,
                 style:  TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -134,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                _email,
+                email,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey.shade600,
@@ -435,7 +412,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           TextButton(
             onPressed: () {
               AuthService().signOut(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) =>  LoginScreen()));
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.red.shade50,

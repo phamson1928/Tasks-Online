@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import '../view_models/Task_Provider.dart';
+import '../view_models/task_provider.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -203,7 +203,7 @@ class _AddScreenState extends State<AddScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Ngày hết hạn",
+                  "Ngày đến hạn",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade700,
@@ -265,14 +265,12 @@ class _AddScreenState extends State<AddScreen> {
   Widget _buildSubmitButton() {
     return ElevatedButton(
       onPressed: () {
-        if (_formKey.currentState!.validate()) {
           Provider.of<TaskProvider>(context, listen: false).addTask(
             _titleController.text,
             _descriptionController.text,
             _selectedDate,
             _noteController.text,
           );
-
           // Show success message
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -281,10 +279,8 @@ class _AddScreenState extends State<AddScreen> {
               duration: Duration(seconds: 2),
             ),
           );
-
           // Navigate back
           Navigator.pop(context);
-        }
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepOrange,
