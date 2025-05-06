@@ -6,13 +6,18 @@ import 'detail_screen.dart';
 import 'setting_screen.dart';
 
 class TodoListScreen extends StatefulWidget {
-  const TodoListScreen({Key? key}) : super(key: key);
+  const TodoListScreen({super.key});
 
   @override
   _TodoListScreenState createState() => _TodoListScreenState();
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<TaskProvider>(context, listen: false).loadCompletedTaskCount();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

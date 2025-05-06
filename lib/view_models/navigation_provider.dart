@@ -7,6 +7,6 @@ class NavigationViewModel extends ChangeNotifier {
 
   void updateIndex(int newIndex) {
     _currentIndex = newIndex;
-    notifyListeners(); // Thông báo View rằng trạng thái đã thay đổi
+    notifyListeners();
   }
 }

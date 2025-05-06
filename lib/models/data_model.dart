@@ -15,7 +15,6 @@ class Task {
     this.isCompleted = false,
   });
 
-  /// Convert Task to JSON for Firestore
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -27,7 +26,6 @@ class Task {
     };
   }
 
-  /// Convert Firestore JSON to Task object
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
       id: json['id'] ?? '',

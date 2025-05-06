@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quanlicongviec/widgets/TextField.dart';
 import '../services/auth_service.dart';
+import 'forgotpassword_screen.dart';
 import 'home_screen.dart';
 import 'register_screen.dart';
 
@@ -36,32 +38,25 @@ class LoginScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600]),
               ),
               SizedBox(height: 111),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  hintText: "example@email.com",
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+              MyTextField(
+                Controller: emailController,
+                label: "Email",
+                obscureText: false,
               ),
               SizedBox(height: 16),
-              TextField(
-                controller: passwordController,
+              MyTextField(
+                Controller: passwordController,
+                label: "Mật khẩu",
                 obscureText: true,
-                decoration: InputDecoration(
-                  labelText: "Mật khẩu",
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              ),
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                }, child: Text("Quên mật khẩu?"),
                 ),
               ),
-              SizedBox(height: 33),
               Center(
                 child: TextButton(
                   onPressed: () async {
@@ -118,7 +113,13 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 144),
+              SizedBox(height: 60),
+              Center(
+                child: Text(
+                      "Hoặc đăng nhập bằng",
+                      style: TextStyle(color: Colors.grey[600]),
+                ),),
+              SizedBox(height: 20,),
               Center(
                 child: ElevatedButton(
                     onPressed: () async {
@@ -134,13 +135,13 @@ class LoginScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
-                      backgroundColor: Colors.white, // Đổi màu nền trắng
+                      backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Bo góc ít để gần giống ô vuông
-                        side: BorderSide(color: Colors.black12), // Viền xám nhẹ
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.black12),
                       ),
                     ),
-                    child: Image.asset('assets/images/google-icon.png', height: 55, width: 44), // Icon Google
+                    child: Image.asset('assets/images/google-icon.png', height: 55, width: 44),
                   ),
               ),
 
@@ -153,10 +154,18 @@ class LoginScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
-                  child: Text(
-                    "Chưa có tài khoản? Đăng ký ngay",
-                    style: TextStyle(color: orangeColor),
-                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Chưa có tài khoản? ",
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "Đăng ký",
+                          style: TextStyle(color: orangeColor),
+                        ),
+                      ]
+                    )
+                  )
                 ),
               ),
             ],

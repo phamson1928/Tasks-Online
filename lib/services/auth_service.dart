@@ -9,22 +9,18 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final _emailController = TextEditingController();
 
 
   Future<User?> signInWithGoogle() async {
     try {
-      // Đăng nhập với Google
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) return null;
-
-      // Xác thực Google
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      // Đăng nhập vào Firebase
       UserCredential userCredential = await _auth.signInWithCredential(credential);
       return userCredential.user;
     } catch (e) {
@@ -32,29 +28,24 @@ class AuthService {
       return null;
     }
   }
-
   Future<User?> signUpWithEmail(String email, String password, String name) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      // Lưu thông tin người dùng vào Firestore
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
         'name': name,
         'createdAt': Timestamp.now(),
       });
-
       return userCredential.user;
     } catch (e) {
       print("Lỗi đăng ký: $e");
       return null;
     }
   }
-
   Future<User?> signInWithEmail(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -67,9 +58,23 @@ class AuthService {
       return null;
     }
   }
-
   Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
+  Future<void> resetPassword( context) async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: _emailController.text.trim());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đã gửi email khôi phục mật khẩu')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lỗi: ${e.toString()}')),
+      );
+    }
   }
 }

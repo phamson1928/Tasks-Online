@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../widgets/TextField.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
   final AuthService authService = AuthService();
 
   final Color orangeColor = Color(0xFFF5A623);
+
+  void validatePassword(String password) {
+    if (password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Mật khẩu phải có ít nhất 6 ký tự")),
+      );
+    }
+    else if (password != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Mật khẩu không khớp")),
+      );
+    }
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Đăng ký thành công")),
+      );
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,43 +59,28 @@ class RegisterScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 SizedBox(height: 44),
-                TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                    labelText: "Tên",
-                    hintText: "Nguyễn Văn A",
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                MyTextField(
+                  Controller: nameController,
+                  label: "Tên",
+                  obscureText: false,
                 ),
                 SizedBox(height: 16),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    hintText: "example@email.com",
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                MyTextField(
+                  Controller: emailController,
+                  label: "Email",
+                  obscureText: false,
                 ),
                 SizedBox(height: 16),
-                TextField(
-                  controller: passwordController,
+                MyTextField(
+                  Controller: passwordController,
+                  label: "Mật khẩu",
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Mật khẩu",
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                ),
+                SizedBox(height: 16),
+                MyTextField(
+                  Controller: confirmPasswordController,
+                  label: "Vui lòng xác nhận mật khẩu",
+                  obscureText: true,
                 ),
                 SizedBox(height: 32),
                 Center(
@@ -77,6 +91,7 @@ class RegisterScreen extends StatelessWidget {
                         passwordController.text,
                         nameController.text,
                       );
+                      validatePassword(passwordController.text);
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
@@ -88,8 +103,8 @@ class RegisterScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFFF2C392), // cam nhạt
-                            Color(0xFFCC5A3F), // cam đậm
+                            Color(0xFFF2C392),
+                            Color(0xFFCC5A3F),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(30),
@@ -121,13 +136,21 @@ class RegisterScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(
-                      "Đã có tài khoản? Đăng nhập",
-                      style: TextStyle(color: orangeColor),
-                    ),
+                    child: Text.rich(
+                      TextSpan(
+                        text: "Đã có tài khoản",
+                        style: TextStyle(color : Colors.black),
+                        children: [
+                          TextSpan(
+                            text: " Đăng nhập",
+                            style: TextStyle(color: Colors.orange)
+                          )
+                        ]
+                      )
+                    )
                   ),
                 ),
-                SizedBox(height: 10), // Thêm khoảng cách để tránh tràn nội dung
+                SizedBox(height: 10),
               ],
             ),
           ),
