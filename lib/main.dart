@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return  HomeScreen(); // Nếu đã đăng nhập, vào màn hình chính
+              return  HomeScreen();
             }
-            return  LoginScreen(); // Nếu chưa đăng nhập, hiển thị màn hình đăng nhập
+            return  LoginScreen();
           },
         ),
       ),

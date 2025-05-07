@@ -13,7 +13,7 @@ class ForgotPasswordViewModel extends ChangeNotifier {
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      return null; // null tức là không có lỗi
+      return null;
     } catch (e) {
       return 'Lỗi: ${e.toString()}';
     }

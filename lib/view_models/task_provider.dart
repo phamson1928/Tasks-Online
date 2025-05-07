@@ -6,13 +6,13 @@ import '../models/data_model.dart';
 class TaskProvider extends ChangeNotifier {
   List<Task> _task = [];
   int completedTaskCount = 0;
-
   List<Task> get task => _task;
 
 
-  void addTask(String title, String description, DateTime dueDate, String note) {
+  void addTask(String title, String description, DateTime dueDate, String note) async {
     final id = DateTime.now().millisecondsSinceEpoch.toString();
     final uid = FirebaseAuth.instance.currentUser!.uid;
+
     final newTask = Task(
       id: id,
       title: title,
@@ -20,10 +20,17 @@ class TaskProvider extends ChangeNotifier {
       dueDate: dueDate,
       note: note,
     );
+
     _task.add(newTask);
     notifyListeners();
 
-    FirebaseFirestore.instance.collection('users').doc(uid).collection('tasks').doc(id).set({
+    // Lưu lên Firestore
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('tasks')
+        .doc(id)
+        .set({
       'id': id,
       'title': title,
       'description': description,
@@ -31,6 +38,7 @@ class TaskProvider extends ChangeNotifier {
       'note': note,
     });
   }
+
 
   void removeTask(String id, {bool countAsCompleted = false}) async {
     final index = _task.indexWhere((t) => t.id == id);
