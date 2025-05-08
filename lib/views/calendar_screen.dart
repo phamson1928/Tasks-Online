@@ -382,13 +382,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
             )
                 : null,
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/detail',
-                arguments: task,
-              );
-            },
           ),
         );
       },

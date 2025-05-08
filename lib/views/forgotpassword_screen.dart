@@ -9,6 +9,7 @@ class ForgotPasswordPage extends StatelessWidget {
       create: (_) => ForgotPasswordViewModel(),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
             'Quên mật khẩu',
             style: TextStyle(

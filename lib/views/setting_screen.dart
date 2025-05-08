@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../services/auth_service.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -11,29 +10,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
-  }
-
-  Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
-      _darkModeEnabled = prefs.getBool('dark_mode_enabled') ?? false;
-    });
-  }
-
-  Future<void> _saveSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('notifications_enabled', _notificationsEnabled);
-    await prefs.setBool('dark_mode_enabled', _darkModeEnabled);
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +41,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildUserProfileSection(),
-            const Divider(height: 1),
-            _buildSettingsSection(),
             const Divider(height: 1),
             _buildAccountSection(),
           ],
@@ -120,67 +94,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           const Spacer(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: Text(
-              "Tùy chỉnh ứng dụng",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade700,
-              ),
-            ),
-          ),
-          _buildSettingsItem(
-            icon: Icons.notifications,
-            title: "Thông báo",
-            subtitle: _notificationsEnabled ? "Đã bật" : "Đã tắt",
-            trailing: Switch(
-              value: _notificationsEnabled,
-              activeColor: Colors.deepOrange,
-              onChanged: (value) {
-                setState(() {
-                  _notificationsEnabled = value;
-                  _saveSettings();
-                });
-              },
-            ),
-          ),
-          _buildSettingsItem(
-            icon: Icons.dark_mode,
-            title: "Chế độ tối",
-            subtitle: _darkModeEnabled ? "Đã bật" : "Đã tắt",
-            trailing: Switch(
-              value: _darkModeEnabled,
-              activeColor: Colors.deepOrange,
-              onChanged: (value) {
-                setState(() {
-                  _darkModeEnabled = value;
-                  _saveSettings();
-                });
-              },
-            ),
-          ),
-          _buildSettingsItem(
-            icon: Icons.language,
-            title: "Ngôn ngữ",
-            subtitle: "Tiếng Việt",
-            onTap: () {
-              // Show language selection dialog
-              _showLanguageSelectionDialog();
-            },
-          ),
         ],
       ),
     );
@@ -283,47 +196,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Future<void> _showLanguageSelectionDialog() async {
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Chọn ngôn ngữ"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildLanguageOption("Tiếng Việt", true),
-            _buildLanguageOption("English", false),
-          ],
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "Đóng",
-              style: TextStyle(color: Colors.deepOrange),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLanguageOption(String language, bool isSelected) {
-    return ListTile(
-      title: Text(language),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.deepOrange)
-          : null,
-      onTap: () {
-        // Handle language selection
-        Navigator.pop(context);
-      },
     );
   }
 

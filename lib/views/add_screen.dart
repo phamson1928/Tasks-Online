@@ -45,14 +45,14 @@ class _AddScreenState extends State<AddScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(22.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildHeaderSection(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 _buildInputField(
                   controller: _titleController,
                   label: "Tiêu đề",
@@ -104,10 +104,10 @@ class _AddScreenState extends State<AddScreen> {
             child: const Icon(
               Icons.add_task,
               color: Colors.deepOrange,
-              size: 40,
+              size: 35,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           const Text(
             "Tạo công việc mới",
             style: TextStyle(
@@ -162,7 +162,7 @@ class _AddScreenState extends State<AddScreen> {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           labelStyle: TextStyle(color: Colors.grey.shade700),
           floatingLabelStyle: const TextStyle(color: Colors.deepOrange),
           focusedBorder: OutlineInputBorder(
@@ -291,9 +291,9 @@ class _AddScreenState extends State<AddScreen> {
         elevation: 2,
       ),
       child: const Text(
-        "THÊM CÔNG VIỆC",
+        "Thêm",
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 15,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.0,
           color: Colors.white,

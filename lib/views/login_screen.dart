@@ -29,22 +29,12 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 60),
-                Center(
-                  child: Container(
-                    width: 66,
-                    height: 66,
-                    child: Image.asset("assets/images/icon_for_task_list_with_orange.png"),
-                  ),
-                ),
-
-                SizedBox(height: 40),
-
+                SizedBox(height: 100),
                 // Title
                 Text(
                   "Đăng Nhập",
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 50,
                     fontWeight: FontWeight.bold,
                     color: AppColor.darkOrange,
                     letterSpacing: 0.5,
